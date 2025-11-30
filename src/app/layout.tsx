@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-
 import "./globals.css";
+import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
   title: "Memora",
@@ -15,7 +15,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="">
+      <main>
+        <ClientLayout>
         {children}
+        </ClientLayout>
+      </main>
       </body>
     </html>
   );
