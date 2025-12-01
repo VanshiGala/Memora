@@ -10,7 +10,7 @@ export default function Home() {
       <p>Every memory deserves a place. Memora keeps your stories safe — beautifully organized and always with you.</p>
     </div>
     <div className="flex justify-center items-center mt-10">
-    <Link href="/Home">
+    <Link href="/gallery">
     <button className="border p-2 rounded hover:bg-blue-600">Get Started</button>
     </Link>
     </div>
