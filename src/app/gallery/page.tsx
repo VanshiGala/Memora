@@ -1,41 +1,41 @@
-"use client";
 
-import { useEffect, useState, useTransition } from "react";
-import { CloudinaryImage } from "./cloudinary-images";
-import { setAsFavourite } from "./actions";
+import Upload from "@/components/Upload";
+import cloudinary from "cloudinary";
+import { CloudinaryImage } from "./cloudinaryImage";
 
-export default function Gallery() {
-  const [images, setImages] = useState([]);
-  const [isPending, startTransition] = useTransition();
-  
-  useEffect(() => {
-    fetch("/api/gallery")
-      .then((res) => res.json())
-      .then((data) => setImages(data));
-  }, []);
-
-  function handleFav(publicId: string) {
-    startTransition(async () => {
-      await setAsFavourite(publicId);
-    });
-  }
-
-  return (
-    <div className="grid grid-cols-4 gap-4 mt-4 ml-4">
-      {images.map((img: any) => (
-        <div key={img.public_id} className="relative">
-          <CloudinaryImage
-            publicId={img.public_id}
-            width="400"
-            height="300"
-            sizes="100vw"
-            alt="Image"
-            onFav={handleFav}
-            className="rounded-lg"
-          />
-        </div>
-      ))}
-    </div>
-  );
+//define ts shape of each returned cloud image result
+export type SearchResults = {
+    public_id : string,
+    tags:string[]
 }
-
+export default async function GalleryPage(){
+    const results = await cloudinary.v2.search
+    .expression('resource_type:image AND folder:photo-album')
+    .sort_by('created_at', 'desc')
+    .with_field("tags")
+    .max_results(5)
+    .execute() as {resources:SearchResults[]};
+    //console.log("results : ",results)
+    return(
+        <section className="ml-2">
+        <div className="flex justify-between">
+            <h1 className="font-bold text-3xl">Gallery</h1>
+            <Upload />
+            </div>
+            <div className="grid grid-cols-4 gap-4 mt-4 ">
+            {results.resources.map((result)=>(
+                <CloudinaryImage
+                path="/gallery"
+                src={result.public_id}
+                imagedata={result}
+                key={result.public_id}
+                public_id={result.public_id}
+                alt="Image of something"
+                width={300}
+                height={300}/>
+            ))}
+        </div>
+        
+        </section>
+    )
+}

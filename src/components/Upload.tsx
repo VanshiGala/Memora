@@ -1,9 +1,10 @@
 "use client";
 
 import { CldUploadButton } from "next-cloudinary"; //cloudinary upload dialog
-import { CldImage } from 'next-cloudinary'; //strictly client component
+import { CldImage } from "next-cloudinary"; //strictly client component
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { CloudUpload } from "lucide-react";
 
 // type UploadResult={
 //   info:{
@@ -13,37 +14,42 @@ import { useState } from "react";
 //   event:"success"
 // }
 export default function Upload() {
-  const [imageId, setImageId] = useState("")
+  const [imageId, setImageId] = useState("");
   const router = useRouter();
   return (
-<div className="relative w-full h-0 mt-4 ml-4 mr-4">
-  <CldUploadButton //cloudinary widget
-    className="border p-1 w-24 rounded-lg hover:bg-blue-600 absolute top-0 right-0"
-    onSuccess={(event) => { //in-built event
-      if (event.event === "success" && typeof event.info === "object") { //event.info -> meta data as object
-        setImageId(event.info.public_id);
-      }
-    router.refresh(); //to make new img show on page
-}}
-    uploadPreset="photo-album"
-  />
+    <div className="relative w-full h-0 mt-1 ml-4 mr-4">
+      <CldUploadButton //cloudinary widget
+        className="border p-2 w-24 rounded-lg  hover:bg-blue-600 absolute top-0 right-0 cursor-pointer"
+        onSuccess={(event) => {
+          //in-built event
+          if (event.event === "success" && typeof event.info === "object") {
+            //event.info -> meta data as object
+            setImageId(event.info.public_id);
+          }
+          router.refresh(); //to make new img show on page
+        }}
+        uploadPreset="photo-album"
+      >
+        <div className="flex items-center gap-1 ">
+          <CloudUpload className="w-4 h-4" />
+          <span className="font-medium">Upload</span>
+        </div>
+      </CldUploadButton>
 
-<div>
-    {imageId && (<CldImage
-  width="400"
-  height="300"
-  src={imageId}
-  sizes="100vw"
-  alt="Description of my image"
-/>)}
+      <div>
+        {imageId && (
+          <CldImage
+            width="400"
+            height="300"
+            src={imageId}
+            sizes="100vw"
+            alt="Description of my image"
+          />
+        )}
+      </div>
     </div>
-</div>
-
   );
 }
-
-
-
 
 //An upload preset is like a saved configuration ; Think of it as a rulebook for every upload -> controls upload folder, allowed formats, upload permissions
 //1. Unsigned Upload Preset -> Best for client-side upload (browser, React, mobile app) ; NO API key or secret needed.

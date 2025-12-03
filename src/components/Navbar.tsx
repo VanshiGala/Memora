@@ -23,7 +23,7 @@ export default function Navbar({ open, setOpen }:any) {
             </button>
             <input
               type="text"
-              placeholder="Search videos"
+              placeholder="Search photos"
               className="flex-`grow` p-3 outline-none"
             />
           </div>
