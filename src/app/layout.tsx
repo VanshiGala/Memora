@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import AppShell from "./AppShell";
 
 export const metadata: Metadata = {
   title: "Memora",
@@ -16,9 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning>
       <main>
-        <ClientLayout>
+        <AppShell>
         {children}
-        </ClientLayout>
+        </AppShell>
       </main>
       </body>
     </html>

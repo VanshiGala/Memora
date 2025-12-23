@@ -7,10 +7,15 @@ export type SearchResults = {
   public_id: string;
   tags: string[];
 };
-export default async function GalleryPage() {
+export default async function GalleryPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string }>;
+}) {
+  const { search } = await searchParams;
   const results = (await cloudinary.v2.search
     //attention to syntax -> first folder then look for tags
-    .expression("resource_type:image AND NOT tags=favourite" )
+    .expression(`resource_type:image${search ? ` AND tags=${search}`:""}`)
     .sort_by("created_at", "desc")
     .with_field("tags")
     .max_results(20)

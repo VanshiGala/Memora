@@ -24,7 +24,7 @@ export function CloudinaryImage(
     });
   };
   return (
-    <div className="relative group">
+    <div className="relative overflow-hidden rounded-xl">
       <CldImage {...props} src={imagedata.public_id} />
       <Heart
         className={`absolute top-1 left-0 cursor-pointer ${
@@ -32,7 +32,9 @@ export function CloudinaryImage(
         }`}
         onClick={toggleFav}
       />
-<ImageMenu image={imagedata}/>
+<div className="absolute top-2 right-2 z-20">
+        <ImageMenu image={imagedata} />
+      </div>
     </div>
   );
 }

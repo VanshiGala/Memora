@@ -23,7 +23,7 @@ export function ImageGrid({ images }: { images: SearchResults[] }) {
                 alt="Image of something"
                 width={300}
                 height={300}
-                className="rounded-2xl"
+                className="rounded-2xl border"
               />
             ))}
           </div>

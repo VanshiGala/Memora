@@ -14,7 +14,6 @@ export default function AlbumGrid({
 
   return (
     <section className="mt-10">
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-md">
@@ -44,8 +43,6 @@ export default function AlbumGrid({
           </div>
         )}
       </div>
-
-      {/* Content */}
       {imageCount > 0 ? (
         <ImageGrid images={images} />
       ) : (
