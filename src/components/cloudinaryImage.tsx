@@ -2,9 +2,10 @@
 
 import { CldImage } from "next-cloudinary";
 import { Heart } from "lucide-react";
-import { SetAsFavourite } from "./actions"; //server action
+import { SetAsFavourite } from "../app/gallery/actions"; //server action
 import { useTransition, useState } from "react"; //allow bg server action w/o blocking UI ; keeping UI responsive
-import { SearchResults } from "./page";
+import { SearchResults } from "../app/gallery/page";
+import ImageMenu from "./image-menu";
 
 export function CloudinaryImage(
   props: any & { imagedata: SearchResults; path: string }
@@ -23,14 +24,15 @@ export function CloudinaryImage(
     });
   };
   return (
-    <div className="relative">
+    <div className="relative group">
       <CldImage {...props} src={imagedata.public_id} />
       <Heart
-        className={`absolute top-1 right-1 cursor-pointer ${
+        className={`absolute top-1 left-0 cursor-pointer ${
           isFav ? "fill-red-600" : ""
         }`}
         onClick={toggleFav}
       />
+<ImageMenu image={imagedata}/>
     </div>
   );
 }

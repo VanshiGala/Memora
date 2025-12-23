@@ -1,12 +1,12 @@
 
 
 import cloudinary from "cloudinary";
-import { CloudinaryImage } from "../gallery/cloudinaryImage";
+import { CloudinaryImage } from "../../components/cloudinaryImage";
 import { SearchResults } from "../gallery/page";
 
 export default async function FavPage(){
     const results = await cloudinary.v2.search
-    .expression('resource_type:image AND tags=favourite')
+    .expression('resource_type:image AND tags:favourite')
     .sort_by('created_at', 'desc')
     .with_field("tags")
     .max_results(5)
