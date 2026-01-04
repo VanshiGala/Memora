@@ -1,4 +1,4 @@
-import Upload from "@/components/Upload";
+import Upload from "@/components/upload/Upload";
 import cloudinary from "cloudinary";
 import { ImageGrid } from "@/components/image-grid";
 
