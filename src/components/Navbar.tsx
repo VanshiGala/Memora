@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, Users } from "lucide-react";
 import Link from "next/link";
 import SearchForm from "./SearchForm";
 import { Folder } from "@/app/AppShell";
@@ -43,9 +43,12 @@ export default function Navbar({
               <span className="text-gray-700 font-medium">
                 Hello, {session.user?.name || "User"}
               </span>
+              <Link href="/groups">
+                <button className="cursor-pointer"><Users/></button>
+              </Link>
               <button
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="text-red-600 hover:text-red-700 flex items-center gap-1"
+                className="text-red-600 hover:text-red-700 flex items-center gap-1 cursor-pointer"
               >
                 <LogOut size={20} />
                 <span className="hidden md:inline">Logout</span>

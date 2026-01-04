@@ -13,7 +13,7 @@ export default function ClientLayout({
   folders: Folder[];
 }) {
   const pathname = usePathname();
-  const hideNavbar = pathname === "/";
+  const hideNavbar = pathname === "/" || pathname == "/signup" || pathname == "/login";
   const [open, setOpen] = useState(false);
 
   return (

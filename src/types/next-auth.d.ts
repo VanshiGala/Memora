@@ -1,9 +1,8 @@
 //this file extends nextauth's default types to add custom properties
 import NextAuth from "next-auth";
 
-//extends existing module types
 declare module "next-auth" {
-  interface Session { //add custom properties
+  interface Session {
     user: {
       id: string;
       name?: string | null;

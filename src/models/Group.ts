@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 
-const groupSchema = new mongoose.Schema(
+const GroupSchema = new Schema(
   {
     name: {
       type: String,
@@ -10,41 +10,28 @@ const groupSchema = new mongoose.Schema(
 
     description: {
       type: String,
-      trim: true,
       default: "",
     },
 
-    joinCode: {
-      type: String,
-      required: true,
-      unique: true,
-      uppercase: true,
-    },
-
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
+    admin: {
+      type: Types.ObjectId,
       ref: "User",
       required: true,
     },
 
     members: [
       {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        role: {
-          type: String,
-          enum: ["admin", "member"],
-          default: "member",
-        },
-        joinedAt: {
-          type: Date,
-          default: Date.now,
-        },
+        type: Types.ObjectId,
+        ref: "User",
       },
     ],
+
+    inviteCode: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
 
     isPrivate: {
       type: Boolean,
@@ -52,8 +39,9 @@ const groupSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, 
+    timestamps: true, // createdAt, updatedAt
   }
 );
 
-export default mongoose.model("Group", groupSchema);
+export default mongoose.models.Group ||
+  mongoose.model("Group", GroupSchema);

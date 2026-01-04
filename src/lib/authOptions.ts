@@ -3,6 +3,7 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
+import { conn } from "@/config/dbConfig";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -19,6 +20,7 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials.password) {
           throw new Error("Missing credentials");
         }
+        await conn()
         const user = await User.findOne({ email: credentials.email });
         if (!user) throw new Error("Invalid email or password");
         

@@ -73,7 +73,7 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 px-6">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md mt-4 mb-4">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
             Create Account
@@ -106,7 +106,6 @@ export default function SignupPage() {
               value={formData.fullName}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              placeholder="John Doe"
               required
             />
           </div>
@@ -121,7 +120,6 @@ export default function SignupPage() {
               value={formData.email}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              placeholder="john@example.com"
               required
             />
           </div>
@@ -136,7 +134,6 @@ export default function SignupPage() {
               value={formData.password}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              placeholder="At least 6 characters"
               required
             />
           </div>
@@ -151,7 +148,6 @@ export default function SignupPage() {
               value={formData.confirmPassword}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              placeholder="Confirm your password"
               required
             />
           </div>
@@ -175,7 +171,7 @@ export default function SignupPage() {
           </button>
         </form>
 
-        <div className="mt-8 text-center">
+        <div className="mt-2 text-center">
           <p className="text-gray-600">
             Already have an account?{" "}
             <Link
@@ -187,7 +183,7 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-gray-200">
+        <div className="pt-6 border-t border-gray-200">
           <p className="text-xs text-gray-500 text-center">
             By signing up, you agree to our Terms of Service and Privacy Policy.
             Your memories are safe with us.
