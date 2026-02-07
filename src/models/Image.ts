@@ -7,6 +7,11 @@ const ImageSchema = new mongoose.Schema(
       ref: "Group",
       required: true,
     },
+      uploadedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
     publicId: {
       type: String,
       required: true,

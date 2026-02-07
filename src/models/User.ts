@@ -13,7 +13,8 @@ const UserSchema = new Schema({
     },
     fullName:{
         type:String
-    }
+    },
+    profilePic: { type: String }
 },{timestamps:true})
 
 const User = models.User || model("User", UserSchema);

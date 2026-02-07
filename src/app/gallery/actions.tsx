@@ -2,6 +2,7 @@
 
 import cloudinary from "cloudinary"
 import { revalidatePath } from "next/cache"
+import Image from "@/models/Image"
 
 export async function SetAsFavourite( //mark and unmark favourites
     publicId:string, 
@@ -18,6 +19,11 @@ export async function SetAsFavourite( //mark and unmark favourites
     revalidatePath(path) //tells nextjs to clear cache for this page & generate fresh content for the same
 }
 
+export async function deleteImage(public_id:string, path:string){
+    await cloudinary.v2.uploader.destroy(public_id); //delete from cloudinary
+    await Image.deleteOne({public_id});//delete from db
+    return {success:true};//revalidate gallery page
+}
 
 
 

@@ -14,7 +14,7 @@ export default async function Album({ params,}:{params: Promise<{albumName:strin
   //console.log("results : ",results)
 
   return (
-    <section className="ml-2">
+    <section className="ml-2" >
       <div className="flex justify-between">
         <h1 className="font-bold text-3xl">Album {albumName}</h1>
       </div>
