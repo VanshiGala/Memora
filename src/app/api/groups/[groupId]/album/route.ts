@@ -29,7 +29,7 @@ import { conn } from "@/config/dbConfig";
 import Album from "@/models/Album";
 
 export async function GET(
-  req: NextRequest,
+  request: NextRequest,
   context: { params: Promise<{ groupId: string }> }
 ) {
   await conn();
