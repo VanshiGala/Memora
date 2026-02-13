@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function EditPage() {
   const searchParams = useSearchParams();
-  const publicId = searchParams.get("publicId");
+  const publicId = searchParams?.get("publicId");
 
   if (!publicId) {
     return (
