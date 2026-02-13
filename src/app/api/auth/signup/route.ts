@@ -3,7 +3,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
-import { conn } from "@/config/dbConfig";
+import {conn} from "../../../../config/dbConfig"
 
 export async function POST(req: Request) {
   try {

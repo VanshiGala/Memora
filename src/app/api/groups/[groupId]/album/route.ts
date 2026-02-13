@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { conn } from "@/config/dbConfig";
 import Album from "@/models/Album";
 
 export async function GET(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { groupId: string } }
 ) {
   await conn();
