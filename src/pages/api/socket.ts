@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (res.socket && !((res.socket as any).server.io)) {
-    console.log("🔥 Initializing Socket.IO server");
+    console.log("Initializing Socket.IO server");
 
     const io = new Server((res.socket as any).server, {
       path: "/api/socket",
@@ -16,11 +16,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     (res.socket as any).server.io = io;
 
     io.on("connection", (socket) => {
-      console.log("✅ Socket connected:", socket.id);
+      console.log("Socket connected:", socket.id);
 
       socket.on("join-group", (groupId: string) => {
         socket.join(`group:${groupId}`);
-        console.log("👥 Joined group:", groupId);
+        console.log("Joined group:", groupId);
       });
 
       socket.on("send-group-message", async ({ groupId, text, userId, username }) => {

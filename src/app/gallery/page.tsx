@@ -56,6 +56,7 @@ export default async function GalleryPage({
     .with_field("tags")
     .max_results(20)
     .execute()) as { resources: SearchResults[] };
+  
 
   return (
     <main className="min-h-screen bg-neutral-950 text-neutral-100">

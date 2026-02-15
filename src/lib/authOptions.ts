@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import { conn } from "@/config/dbConfig";
+import { loginSchema } from "./authSchema";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -17,19 +18,40 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
-          throw new Error("Missing credentials");
+        // if (!credentials?.email || !credentials.password) {
+        //   throw new Error("Missing credentials");
+        // }
+        // await conn()
+        // const user = await User.findOne({ email: credentials.email });
+        // if (!user) throw new Error("Invalid email or password");
+
+        // const isMatch = await bcrypt.compare(
+        //   credentials.password,
+        //   user.password
+        // );
+        // if (!isMatch) throw new Error("Invalid email or password");
+
+        // return {
+        //   id: user._id.toString(),
+        //   email: user.email,
+        //   name: user.fullName,
+        // };
+        const parsed = loginSchema.safeParse(credentials);
+
+        if (!parsed.success) {
+          throw new Error("Invalid input");
         }
-        await conn()
-        const user = await User.findOne({ email: credentials.email });
+
+        const { email, password } = parsed.data;
+
+        await conn();
+
+        const user = await User.findOne({ email });
         if (!user) throw new Error("Invalid email or password");
-        
-        const isMatch = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
+
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) throw new Error("Invalid email or password");
-        
+
         return {
           id: user._id.toString(),
           email: user.email,

@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { CldUploadButton } from "next-cloudinary";
-import { Camera } from "lucide-react";
+// import { CldUploadButton } from "next-cloudinary";
+// import { Camera } from "lucide-react";
+import { signupSchema } from "@/lib/authSchema";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -32,15 +33,22 @@ export default function SignupPage() {
     setSuccess("");
 
     // password match validation
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+    // if (formData.password !== formData.confirmPassword) {
+    //   setError("Passwords do not match");
+    //   return;
+    // }
+
+    // if (formData.password.length < 6) {
+    //   setError("Password must be at least 6 characters");
+    //   return;
+    // }
+    const parsed = signupSchema.safeParse(formData);
+
+    if (!parsed.success) {
+      setError(parsed.error.issues[0].message);
       return;
     }
 
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
 
     setLoading(true);
     //api integration
@@ -64,7 +72,7 @@ export default function SignupPage() {
         setSuccess("Account created successfully! Redirecting...");
         // Redirect after successful signup
         setTimeout(() => {
-          router.push("/login");
+          router.push("/gallery");
         }, 2000);
       }
     } catch (err) {

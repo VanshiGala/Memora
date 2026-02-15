@@ -4,32 +4,44 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import {conn} from "../../../../config/dbConfig"
+import { signupSchema } from "@/lib/authSchema";
 
 export async function POST(req: Request) {
   try {
     await conn(); //connection before processing
-    const { fullName, email, password } = await req.json();
-    //input validation
-    if (!fullName || !email || !password) {
+    // const { fullName, email, password } = await req.json();
+    // //input validation
+    // if (!fullName || !email || !password) {
+    //   return NextResponse.json(
+    //     { message: "All fields are required" },
+    //     { status: 400 }
+    //   );
+    // }
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   return NextResponse.json(
+    //     { message: "Invalid email format" },
+    //     { status: 400 }
+    //   );
+    // }
+    // if (password.length < 6) {
+    //   return NextResponse.json(
+    //     { message: "Password must be at least 6 characters" },
+    //     { status: 400 }
+    //   );
+    // }
+    const body = await req.json();
+
+    const parsed = signupSchema.safeParse(body);
+
+    if (!parsed.success) {
       return NextResponse.json(
-        { message: "All fields are required" },
-        { status: 400 }
-      );
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { message: "Invalid email format" },
-        { status: 400 }
-      );
-    }
-    if (password.length < 6) {
-      return NextResponse.json(
-        { message: "Password must be at least 6 characters" },
+        { message: parsed.error.issues[0].message },
         { status: 400 }
       );
     }
 
+    const { fullName, email, password } = parsed.data;
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
