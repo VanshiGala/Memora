@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import { conn } from "../../../../config/dbConfig";
 import { signupSchema } from "@/lib/authSchema";
+import { sendWelcomeEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
   try {
@@ -59,14 +60,8 @@ export async function POST(req: Request) {
       password: hashedPassword,
     });
 
-    await fetch("/api/send-welcome", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: user.email,
-        name: user.fullName,
-      }),
-    });
+    sendWelcomeEmail(user.email, user.fullName).catch(console.error);
+
     //success response
     return NextResponse.json(
       {
