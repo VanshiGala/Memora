@@ -72,8 +72,8 @@ export default function SignupPage() {
         setSuccess("Account created successfully! Redirecting...");
         // Redirect after successful signup
         setTimeout(() => {
-          router.push("/gallery");
-        }, 2000);
+          router.push("/login");
+        }, 1000);
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
