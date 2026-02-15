@@ -27,6 +27,7 @@
     "next-cloudinary": "^6.17.5",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "resend": "^6.9.2",
     "shadcn": "^3.6.1",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",

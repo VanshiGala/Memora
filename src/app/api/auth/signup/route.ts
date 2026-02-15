@@ -3,7 +3,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
-import {conn} from "../../../../config/dbConfig"
+import { conn } from "../../../../config/dbConfig";
 import { signupSchema } from "@/lib/authSchema";
 
 export async function POST(req: Request) {
@@ -37,16 +37,17 @@ export async function POST(req: Request) {
     if (!parsed.success) {
       return NextResponse.json(
         { message: parsed.error.issues[0].message },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const { fullName, email, password } = parsed.data;
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
         { message: "User already exists" },
-        { status: 409 } //conflict status
+        { status: 409 }, //conflict status
       );
     }
 
@@ -57,6 +58,15 @@ export async function POST(req: Request) {
       email,
       password: hashedPassword,
     });
+
+    await fetch("/api/send-welcome", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: user.email,
+        name: user.fullName,
+      }),
+    });
     //success response
     return NextResponse.json(
       {
@@ -65,13 +75,13 @@ export async function POST(req: Request) {
         email: user.email,
         message: "Account created successfully",
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Signup error:", error);
     return NextResponse.json(
       { message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
